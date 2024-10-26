@@ -1,0 +1,198 @@
+{% extends 'base.html'%}
+
+    {% block content %}
+    <!-- Descripción -->
+    <div id="descripcion">
+      <p>
+        <b>Tienda Verde: Donde cada compra es un paso hacia un futuro más verde.</b><br />
+        ¡Reciclar es nuestra forma de cuidar el planeta!
+      </p>
+    </div>
+
+    <!-- Productos destacados (Carousel) -->
+    <div id="prod-destacados" class="container-fluid">
+      <div id="destacados" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#destacados"
+            data-bs-slide-to="0"
+            class="active"
+          ></button>
+          <button type="button" data-bs-target="#destacados" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#destacados" data-bs-slide-to="2"></button>
+        </div>
+        {% load static %}
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="https://naturtable.es/alimentacion/wp-content/uploads/2020/07/Envases_Ecologicos-1200x824.jpg"
+              alt="Kit Cafe Ecologico"
+              class="d-block w-100"
+            />
+            <div class="carousel-caption">
+              <h3>Kit Cafe Ecologico</h3>
+              <p>Un kit escencial para todo amante del cafe y la naturaleza!</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://regalatumarca.cl/wp-content/uploads/2016/03/set-ecologico-de-oficina.jpg"
+              alt="Kit Oficina Ecologico"
+              class="d-block w-100"
+            />
+            <div class="carousel-caption">
+              <h3>Kit Oficina Ecologico</h3>
+              <p>Un kit completo con todo lo necesario para trabajo de oficina!</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://globomarketing.cl/wp-content/uploads/2017/04/KIT-010_3.jpg"
+              alt="Kit Siembra Ecologico"
+              class="d-block w-100"
+            />
+            <div class="carousel-caption">
+              <h3>Kit Siembra Ecologico</h3>
+              <p>Especial para amantes de las plantas que quieran empezar a sembrar!</p>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#destacados"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#destacados"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Separador -->
+    <div id="separador-productos-formulario">
+      <h4><a href="/productos">Clickeame para ver todos los productos!</a></h4>
+    </div>
+
+    <!-- Formulario -->
+    <section id="form-section" class="container">
+      <h1 class="text-center">Formulario de Recolección de Residuos</h1>
+      <form id="wasteCollectionForm" class="needs-validation" novalidate>
+        <h5 class="mb-3"><b>Selección de Residuos</b></h5>
+
+        <div class="mb-3">
+          <label for="tipoResiduos" class="form-label">Tipo de Residuo*</label>
+          <select class="form-select" id="tipoResiduos" required>
+            <option value="">Selecciona un tipo de residuo</option>
+            <option value="plastico">Plástico</option>
+            <option value="papel">Papel</option>
+            <option value="vidrio">Vidrio</option>
+            <option value="metales">Metales</option>
+            <option value="electronicos">Electrónicos</option>
+          </select>
+          <div class="invalid-feedback">Por favor, selecciona un tipo de residuo.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="subcategoriaResiduos" class="form-label">Subcategoría de Residuo*</label>
+          <select class="form-select" id="subcategoriaResiduos" required>
+            <option value="">Selecciona una subcategoría</option>
+          </select>
+          <div class="invalid-feedback">Por favor, selecciona una subcategoría de residuo.</div>
+        </div>
+
+        <h5 class="mb-3"><b>Datos Personales</b></h5>
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre*</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Nombre completo" required />
+          <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo Electrónico*</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="nombre@ejemplo.com"
+            required
+          />
+          <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="direccion" class="form-label">Dirección*</label>
+          <input
+            type="text"
+            class="form-control"
+            id="direccion"
+            placeholder="Dirección de recolección"
+            required
+          />
+          <div class="invalid-feedback">Por favor, ingresa una dirección válida.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="comentarios" class="form-label">Comentarios Adicionales</label>
+          <textarea
+            class="form-control"
+            id="comentarios"
+            rows="3"
+            placeholder="Agregar notas adicionales"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+      </form>
+    </section>
+
+    <!-- JS de formulario -->
+    <script>
+      document.getElementById('tipoResiduos').addEventListener('change', function () {
+        var tipo = this.value;
+        var subcategoria = document.getElementById('subcategoriaResiduos');
+        subcategoria.innerHTML = '<option value="">Selecciona una subcategoría</option>';
+
+        var opciones = {
+          plastico: ['Botellas', 'Envases', 'Bolsas'],
+          papel: ['Periódicos', 'Revistas', 'Cartón'],
+          vidrio: ['Botellas de vidrio', 'Frascos', 'Cristalería'],
+          metales: ['Latas', 'Cables', 'Electrodomésticos pequeños'],
+          electronicos: ['Teléfonos móviles', 'Baterías', 'Componentes de computadoras']
+        };
+
+        if (opciones[tipo]) {
+          opciones[tipo].forEach(function (opcion) {
+            var newOption = document.createElement('option');
+            newOption.value = opcion.toLowerCase().replace(/ /g, '-');
+            newOption.textContent = opcion;
+            subcategoria.appendChild(newOption);
+          });
+        }
+      });
+
+      (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      })();
+    </script>
+    {% endblock %}
