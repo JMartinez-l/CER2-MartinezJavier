@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from MainApp.views import agregar_producto, eliminar_producto, restar_producto, limpiar_carrito
+from MainApp.views import agregar_producto, eliminar_producto, restar_producto, limpiar_carrito, crear_pedido_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('elminar/<int:producto_id>/', eliminar_producto, name="Del"),
     path('restar/<int:producto_id>/', restar_producto, name="Sub"),
     path('limpiar/', limpiar_carrito, name="CLS"),
+    path('hacerPedido/', crear_pedido_view, name='Pedido')
 ]
 
 if settings.DEBUG:

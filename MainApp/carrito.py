@@ -1,3 +1,6 @@
+from .models import Pedidos
+
+
 class Carrito:
     def __init__(self, request):
         self.request = request
@@ -44,3 +47,27 @@ class Carrito:
     def limpiar(self):
         self.session["carrito"] = {}
         self.session.modified = True
+
+    def crear_pedido(self):
+        # You can adjust the fields as necessary
+        total_price = sum(item['acumulado'] for item in self.carrito.values())
+        
+        user_email = self.request.user.email
+
+        description_lines = []
+        for item in self.carrito.values():
+            line = f"{item['nombre']} - Cantidad: {item['cantidad']}, Total: {item['acumulado']}"
+            description_lines.append(line)
+            description = "\n".join(description_lines)
+                            
+        # Create a new Pedido
+        pedidos = Pedidos.objects.create(
+            name="Pedido from " + user_email,
+            description=description,
+            partialPrice=total_price,
+            estate='P' 
+        )
+
+        return pedidos
+
+        

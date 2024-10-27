@@ -22,4 +22,4 @@ class Pedidos(models.Model):
         ('P', 'Pendiente'),
         ('C', 'Completado')
     )
-    estate = models.CharField(max_length=1, choices=Estados)
+    estate = models.CharField(max_length=1, choices=Estados, default='C')

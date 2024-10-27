@@ -71,7 +71,6 @@ def Carrito_view(request):
 def agregar_producto(request, producto_id):
     carrito = Carrito(request)
     print("Carrito instance type:", type(carrito))
-    #producto = get_object_or_404(Producto, producto_id)
     producto = Producto.objects.get(id=producto_id)
     carrito.agregar(producto)
     return redirect("/carrito")
@@ -94,5 +93,10 @@ def limpiar_carrito(request):
     return redirect("/productos")
 
 
+def crear_pedido_view(request):
+    carrito = Carrito(request)
+    pedido = carrito.crear_pedido()
+    carrito.limpiar()
+    return redirect('/carrito')
 
 
