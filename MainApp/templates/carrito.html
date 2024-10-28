@@ -23,6 +23,7 @@
           <td>{{value.acumulado}}
             <a href="{% url 'Add' value.producto_id %}" class="badge btn btn-dark badge-dark">+</a>
             <a href="{% url 'Sub' value.producto_id %}" class="badge btn btn-dark badge-dark">-</a>
+            {{value.cantidad}}
           </td>
         </tr>
       {% endfor %}
@@ -43,6 +44,13 @@
     </div>
     <div class="row text-center">
         <div class="col-6"><a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a></div>
+        {% if messages %}
+          <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
         <div class="col-6"><a href="{% url 'Pedido' %}" class="btn btn-success">Hacer Pedido</a></div>
     </div>
 

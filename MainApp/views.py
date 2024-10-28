@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Producto
 from .forms import Formulario
 from .carrito import Carrito
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 from .forms import CustomUserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 # Create your views here.
@@ -35,7 +36,7 @@ def Login(request):
     else:
         form = Formulario()
     
-    return render(request, 'login.html', {
+    return render(request, 'registration/login.html', {
         'form': form
         })
 
@@ -56,18 +57,20 @@ def Register(request):
         else:
             data['form'] = user_creation_form
 
-    return render(request, 'register.html', data)
+    return render(request, 'registration/register.html', data)
 
 def exit(request):
     logout(request)
     return redirect('/')
 
+@login_required
 def Carrito_view(request):
     productos = Producto.objects.all()
     return render(request, 'carrito.html', {
         'productos':productos,
     })
 
+@login_required
 def agregar_producto(request, producto_id):
     carrito = Carrito(request)
     print("Carrito instance type:", type(carrito))
@@ -97,6 +100,7 @@ def crear_pedido_view(request):
     carrito = Carrito(request)
     pedido = carrito.crear_pedido()
     carrito.limpiar()
+    messages.success(request, 'Successfully Sent The Message!')
     return redirect('/carrito')
 
 
