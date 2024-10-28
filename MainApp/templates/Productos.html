@@ -7,17 +7,19 @@
         <div class="row" id="row-catalogo">
           {% load humanize %}
           {% for x in productos %}
-            <div class="col-sm">
-              <div class="card" id="card-catalogo">
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="card d-flex flex-column h-100" id="card-catalogo">
                 <img  class="card-img-top"
                       src="{{ x.imagen.url }}"
                       alt='{{x.name}}'
                 />
-                <div class="card-body">
+                <div class="card-body flex-grow-1 d-flex flex-column">
                   <h4 class="card-title"> {{x.name}} </h4>
                   <p class="card-text"> {{x.description}}</p>   
                   <p class="card-price"> <b>${{x.price | intcomma}}</b></p> 
-                  <a href="/agregar/{{x.id}}" class="btn btn-primary">Agregar al carrito</a>
+                </div>
+                <div class="card-footer text-center">
+                  <a href="/agregar/{{ x.id }}" class="btn btn-primary">Agregar al carrito</a>
                 </div>
               </div>
             </div>
